@@ -1,3 +1,4 @@
+```js
 const {
     Client,
     GatewayIntentBits
@@ -9,9 +10,6 @@ const path = require('path');
 // ==============================
 // CONFIGURAÇÃO
 // ==============================
-
-// COLOQUE O TOKEN DO SEU BOT ENTRE AS ASPAS
-client.login(process.env.DISCORD_TOKEN);
 
 // Formato do apelido:
 // Nome | 001
@@ -107,4 +105,5 @@ client.on('guildMemberAdd', async (member) => {
 // LIGAR O BOT
 // ==============================
 
-client.login(TOKEN);
+client.login(process.env.DISCORD_TOKEN);
+```
