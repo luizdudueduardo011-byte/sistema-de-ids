@@ -1,4 +1,3 @@
-```js
 const {
     Client,
     GatewayIntentBits
@@ -7,18 +6,7 @@ const {
 const fs = require('fs');
 const path = require('path');
 
-// ==============================
-// CONFIGURAÇÃO
-// ==============================
-
-// Formato do apelido:
-// Nome | 001
 const SEPARADOR = ' | ';
-
-
-// ==============================
-// BANCO DE DADOS
-// ==============================
 
 const arquivoDados = path.join(__dirname, 'dados.json');
 
@@ -37,11 +25,6 @@ if (fs.existsSync(arquivoDados)) {
     );
 }
 
-
-// ==============================
-// BOT
-// ==============================
-
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -49,39 +32,26 @@ const client = new Client({
     ]
 });
 
-
-// Quando o bot ligar
 client.once('ready', () => {
     console.log(`Bot conectado como ${client.user.tag}`);
     console.log(`Próximo ID: ${String(dados.proximoId).padStart(3, '0')}`);
 });
 
-
-// Quando uma pessoa entrar
 client.on('guildMemberAdd', async (member) => {
-
-    // Não numerar outros bots
     if (member.user.bot) return;
 
-    // Pega o ID atual
     const id = dados.proximoId;
-
-    // Já reserva o próximo número
     dados.proximoId++;
 
-    // Salva imediatamente
     fs.writeFileSync(
         arquivoDados,
         JSON.stringify(dados, null, 2)
     );
 
-    // 001, 002, 003...
     const numero = String(id).padStart(3, '0');
 
-    // Nome da pessoa
     let nome = member.displayName;
 
-    // O Discord limita o apelido a 32 caracteres
     const apelido = `${nome}${SEPARADOR}${numero}`;
     const apelidoFinal = apelido.substring(0, 32);
 
@@ -100,10 +70,4 @@ client.on('guildMemberAdd', async (member) => {
     }
 });
 
-
-// ==============================
-// LIGAR O BOT
-// ==============================
-
 client.login(process.env.DISCORD_TOKEN);
-```
